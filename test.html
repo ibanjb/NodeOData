@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <script>
+      // Get User's Coordinate from their Browser
+      window.onload = function() {
+        // HTML5/W3C Geolocation
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(UserLocation);
+        }
+        // Default to Barcelona
+        else
+          NearestCity(41.3906267, 2.1554082);
+      }
+
+      // Callback function for asynchronous call to HTML5 geolocation
+      function UserLocation(position) {
+        NearestCity(position.coords.latitude, position.coords.longitude);
+      }
+
+      function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        return d;
+      }
+
+      function deg2rad(deg) {
+        return deg * (Math.PI/180)
+      }
+
+      function NearestCity(latitude, longitude) {
+        var cities = [
+        { name: 'a1', lat: '41.3697771', lng: '2.1576602000000094', id: 1},
+        { name: 'a2', lat: '41.3850639', lng: '2.1734034999999494', id: 2},
+        { name: 'a3', lat: '41.3850639', lng: '2.1734034999999494', id: 3},
+        { name: 'a4', lat: '41.3850639', lng: '2.1734034999999494', id: 4},
+        { name: 'a5', lat: '41.3850639', lng: '2.1734034999999494', id: 5},
+        { name: 'a6', lat: '41.3697771', lng: '2.1576602000000094', id: 6},
+        { name: 'a7', lat: '41.3850639', lng: '2.1734034999999494', id: 7},
+        { name: 'a8', lat: '41.3850639', lng: '2.1734034999999494', id: 8},
+        { name: 'a9', lat: '41.3850639', lng: '2.1734034999999494', id: 9},
+        { name: 'a10', lat: '41.3850639', lng: '2.1734034999999494', id: 10},
+        { name: 'a11', lat: '41.3697771', lng: '2.1576602000000094', id: 11},
+        { name: 'a12', lat: '41.3850639', lng: '2.1734034999999494', id: 12},
+        { name: 'a13', lat: '41.3850639', lng: '2.1734034999999494', id: 13},
+        { name: 'a14', lat: '41.3850639', lng: '2.1734034999999494', id: 14},
+        { name: 'a15', lat: '41.1140157', lng: '1.260863900000004', id: 15},
+        { name: 'a16', lat: '41.3850639', lng: '2.1734034999999494', id: 16},
+        { name: 'a17', lat: '41.5629601', lng: '2.0117393000000448', id: 17},
+        { name: 'a18', lat: '41.4476427', lng: '2.2507874000000356', id: 18},
+        { name: 'a19', lat: '41.4476427', lng: '2.2507874000000356', id: 19},
+        { name: 'a20', lat: '42.11700219999999', lng: '2.7656242000000475', id: 20},
+        { name: 'france', lat: '48.6312734', lng: '2.1216157', id: 21},
+        { name: 'madrid', lat: '40.4004216', lng: '-3.7080326', id: 21},
+      ];
+        let alertText = '';
+        for (i = 0; i < cities.length; i += 1) {
+          const distance = getDistanceFromLatLonInKm(latitude, longitude, cities[i].lat, cities[i].lng)
+          alertText += "Name: " + cities[i].name + " - distance: "  + distance + "\r\n";
+        }
+        alert(alertText);
+      }
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
